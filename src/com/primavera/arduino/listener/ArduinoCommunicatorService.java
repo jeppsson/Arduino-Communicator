@@ -231,9 +231,9 @@ public class ArduinoCommunicatorService extends Service {
                             byte[] sendBuffer = new byte[nrBytesToSend];
                             System.arraycopy(dataToSend, dataSent, sendBuffer, 0, nrBytesToSend);
 
-                            if (DEBUG) Log.d(TAG, "sendthread calling bulkTransfer() out");
+                            if (DEBUG) Log.d(TAG, "calling bulkTransfer() out");
                             final int len = mUsbConnection.bulkTransfer(mOutUsbEndpoint, sendBuffer, nrBytesToSend, 0);
-                            if (DEBUG) Log.d(TAG, len + " of " + nrBytesToSend + " sent.sendthread");
+                            if (DEBUG) Log.d(TAG, len + " of " + nrBytesToSend + " sent.");
                             Intent sendIntent = new Intent(DATA_SENT_INTERNAL_INTENT);
                             sendIntent.putExtra(DATA_EXTRA, sendBuffer);
                             sendBroadcast(sendIntent);
