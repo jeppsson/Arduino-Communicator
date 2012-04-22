@@ -4,4 +4,13 @@
     <string name="default_text_string">No data</string>
     <string name="help">Help</string>
     <string name="help_text">With this app it is easy to communicate with your Arduino Uno R3.\n\nTo let your own Android app receive data from Arduino, listen to the \"primavera.arduino.intent.action.DATA_RECEIVED\" intent. This intent will contain the \"primavera.arduino.intent.extra.DATA\" byte array with the received data. Call getByteArrayExtra(\"primavera.arduino.intent.extra.DATA\") to retreive the data. \n\nTo send data to Arduino from your app, broadcast an intent with action \"primavera.arduino.intent.action.SEND_DATA\". Add the data to be sent as byte array extra \"primavera.arduino.intent.extra.DATA\". \n\nFor any questions or comment, do not hesitate to mail me at mat.jeppsson@gmail.com</string>
+    <string name="permission_denied">Permission denied!</string>
+    <string name="receiving">Receiving!</string>
+    <string name="claimning_interface_failed">Claiming interface failed!</string>
+    <string name="no_in_endpoint_found">No in endpoint found!</string>
+    <string name="no_out_endpoint_found">No out endpoint found!</string>
+    <string name="no_extra_in_intent">No %1$s extra in intent!</string>
+    <string name="device_detaches">Device detached!</string>
+    <string name="no_device_found">No device found!</string>
+    <string name="device_found">Device found!</string>
 </resources>

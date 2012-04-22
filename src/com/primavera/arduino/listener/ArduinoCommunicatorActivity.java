@@ -123,10 +123,10 @@ public class ArduinoCommunicatorActivity extends ListActivity {
 
         if (usbDevice == null) {
             if (DEBUG) Log.i(TAG, "No device found!");
-            Toast.makeText(getBaseContext(), "No device found!", Toast.LENGTH_LONG).show();
+            Toast.makeText(getBaseContext(), getString(R.string.no_device_found), Toast.LENGTH_LONG).show();
         } else {
             if (DEBUG) Log.i(TAG, "Device found!");
-            Toast.makeText(getBaseContext(), "Device found!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getBaseContext(), getString(R.string.device_found), Toast.LENGTH_SHORT).show();
             Intent startIntent = new Intent(getApplicationContext(), ArduinoCommunicatorService.class);
             PendingIntent pendingIntent = PendingIntent.getService(getApplicationContext(), 0, startIntent, 0);
             usbManager.requestPermission(usbDevice, pendingIntent);

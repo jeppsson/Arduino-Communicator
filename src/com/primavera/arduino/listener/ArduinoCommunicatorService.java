@@ -21,6 +21,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Resources;
 import android.hardware.usb.UsbConstants;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbDeviceConnection;
@@ -80,7 +81,7 @@ public class ArduinoCommunicatorService extends Service {
 
         if (!intent.getBooleanExtra(UsbManager.EXTRA_PERMISSION_GRANTED, false)) {
             if (DEBUG) Log.i(TAG, "Permission denied");
-            Toast.makeText(getBaseContext(), "Permission denied!", Toast.LENGTH_LONG).show();
+            Toast.makeText(getBaseContext(), getString(R.string.permission_denied), Toast.LENGTH_LONG).show();
             stopSelf();
             return Service.START_REDELIVER_INTENT;
         }
@@ -94,7 +95,7 @@ public class ArduinoCommunicatorService extends Service {
         }
 
         if (DEBUG) Log.i(TAG, "Receiving!");
-        Toast.makeText(getBaseContext(), "Receiving!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getBaseContext(), getString(R.string.receiving), Toast.LENGTH_SHORT).show();
         startReceiverThread();
         startSenderThread();
 
@@ -135,7 +136,7 @@ public class ArduinoCommunicatorService extends Service {
         UsbInterface usbInterface = mUsbDevice.getInterface(1);
         if (!mUsbConnection.claimInterface(usbInterface, true)) {
             if (DEBUG) Log.e(TAG, "Claiming interface failed!");
-            Toast.makeText(getBaseContext(), "Claiming interface failed!", Toast.LENGTH_LONG).show();
+            Toast.makeText(getBaseContext(), getString(R.string.claimning_interface_failed), Toast.LENGTH_LONG).show();
             mUsbConnection.close();
             return false;
         }
@@ -158,14 +159,14 @@ public class ArduinoCommunicatorService extends Service {
 
         if (mInUsbEndpoint == null) {
             if (DEBUG) Log.e(TAG, "No in endpoint found!");
-            Toast.makeText(getBaseContext(), "No in endpoint found!", Toast.LENGTH_LONG).show();
+            Toast.makeText(getBaseContext(), getString(R.string.no_in_endpoint_found), Toast.LENGTH_LONG).show();
             mUsbConnection.close();
             return false;
         }
 
         if (mOutUsbEndpoint == null) {
             if (DEBUG) Log.e(TAG, "No out endpoint found!");
-            Toast.makeText(getBaseContext(), "No out endpoint found!", Toast.LENGTH_LONG).show();
+            Toast.makeText(getBaseContext(), getString(R.string.no_out_endpoint_found), Toast.LENGTH_LONG).show();
             mUsbConnection.close();
             return false;
         }
@@ -183,13 +184,14 @@ public class ArduinoCommunicatorService extends Service {
                 final byte[] dataToSend = intent.getByteArrayExtra(DATA_EXTRA);
                 if (dataToSend == null) {
                     if (DEBUG) Log.i(TAG, "No " + DATA_EXTRA + " extra in intent!");
-                    Toast.makeText(context, "No " + DATA_EXTRA + " extra in intent!", Toast.LENGTH_LONG).show();
+                    String text = String.format(getResources().getString(R.string.no_extra_in_intent), DATA_EXTRA);
+                    Toast.makeText(context, text, Toast.LENGTH_LONG).show();
                     return;
                 }
 
                 mSenderThread.mHandler.obtainMessage(10, dataToSend).sendToTarget();
             } else if (UsbManager.ACTION_USB_DEVICE_DETACHED.equals(action)) {
-                Toast.makeText(context, "Device detached!", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, getString(R.string.device_detaches), Toast.LENGTH_LONG).show();
                 mSenderThread.mHandler.sendEmptyMessage(11);
                 stopSelf();
             }
