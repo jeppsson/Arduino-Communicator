@@ -72,7 +72,7 @@ public class ArduinoCommunicatorService extends Service {
         if (DEBUG) Log.d(TAG, "onStartCommand() " + intent + " " + flags + " " + startId);
 
         if (mIsRunning) {
-            Log.i(TAG, "Service already running.");
+            if (DEBUG) Log.i(TAG, "Service already running.");
             return Service.START_REDELIVER_INTENT;
         }
 
@@ -165,7 +165,6 @@ public class ArduinoCommunicatorService extends Service {
             if (DEBUG) Log.d(TAG, "onReceive() " + action);
 
             if (SEND_DATA_INTENT.equals(action)) {
-                if (DEBUG) Log.i(TAG, SEND_DATA_INTENT);
                 final byte[] dataToSend = intent.getByteArrayExtra(DATA_EXTRA);
                 if (dataToSend == null) {
                     if (DEBUG) Log.i(TAG, "No " + DATA_EXTRA + " extra in intent!");
@@ -175,7 +174,6 @@ public class ArduinoCommunicatorService extends Service {
 
                 mSenderThread.mHandler.obtainMessage(10, dataToSend).sendToTarget();
             } else if (UsbManager.ACTION_USB_DEVICE_DETACHED.equals(action)) {
-                if (DEBUG) Log.i(TAG, "Device detached!");
                 Toast.makeText(context, "Device detached!", Toast.LENGTH_LONG).show();
                 mSenderThread.mHandler.sendEmptyMessage(11);
                 stopSelf();

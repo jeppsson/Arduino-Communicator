@@ -47,7 +47,7 @@ public class ArduinoCommunicatorActivity extends ListActivity {
     private final static boolean DEBUG = false;
     
     private Boolean mIsReceiving;
-    private ArrayList<ByteString> mTransferedData = new ArrayList<ByteString>();
+    private ArrayList<ByteString> mTransferedDataList = new ArrayList<ByteString>();
     private ArrayAdapter<ByteString> mDataAdapter;
 
     private class ByteString {
@@ -105,7 +105,7 @@ public class ArduinoCommunicatorActivity extends ListActivity {
         if (deviceIterator.hasNext()) {
             UsbDevice tempUsbDevice = deviceIterator.next();
 
-            // Print device information. If you think your device should able
+            // Print device information. If you think your device should be able
             // to communicate with this app, add it to accepted products below.
             if (DEBUG) Log.d(TAG, "VendorId: " + tempUsbDevice.getVendorId());
             if (DEBUG) Log.d(TAG, "ProductId: " + tempUsbDevice.getProductId());
@@ -143,7 +143,7 @@ public class ArduinoCommunicatorActivity extends ListActivity {
         filter.addAction(ArduinoCommunicatorService.DATA_SENT_INTERNAL_INTENT);
         registerReceiver(mReceiver, filter);
 
-        mDataAdapter = new ArrayAdapter<ByteString>(this, android.R.layout.simple_list_item_1, mTransferedData);
+        mDataAdapter = new ArrayAdapter<ByteString>(this, android.R.layout.simple_list_item_1, mTransferedDataList);
         setListAdapter(mDataAdapter);
 
         findDevice();
@@ -153,10 +153,10 @@ public class ArduinoCommunicatorActivity extends ListActivity {
     protected void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
 
-        Log.i(TAG, "onListItemClick() " + position + " " + id);
-        ByteString hexString = mTransferedData.get(position);
-        hexString.toggleCoding();
-        mTransferedData.set(position, hexString);
+        if (DEBUG) Log.i(TAG, "onListItemClick() " + position + " " + id);
+        ByteString transferedData = mTransferedDataList.get(position);
+        transferedData.toggleCoding();
+        mTransferedDataList.set(position, transferedData);
         mDataAdapter.notifyDataSetChanged();
     }
 
@@ -187,7 +187,6 @@ public class ArduinoCommunicatorActivity extends ListActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
         switch (item.getItemId()) {
         case R.id.help:
             startActivity(new Intent(this, Help.class));
@@ -202,15 +201,15 @@ public class ArduinoCommunicatorActivity extends ListActivity {
         private void handleTransferedData(Intent intent, boolean receiving) {
             if (mIsReceiving == null || mIsReceiving != receiving) {
                 mIsReceiving = receiving;
-                mTransferedData.add(new ByteString());
+                mTransferedDataList.add(new ByteString());
             }
 
             final byte[] newTransferedData = intent.getByteArrayExtra(ArduinoCommunicatorService.DATA_EXTRA);
             if (DEBUG) Log.i(TAG, "data: " + newTransferedData.length + " \"" + new String(newTransferedData) + "\"");
 
-            ByteString transferedData = mTransferedData.get(mTransferedData.size() - 1);
+            ByteString transferedData = mTransferedDataList.get(mTransferedDataList.size() - 1);
             transferedData.add(newTransferedData);
-            mTransferedData.set(mTransferedData.size() - 1, transferedData);
+            mTransferedDataList.set(mTransferedDataList.size() - 1, transferedData);
             mDataAdapter.notifyDataSetChanged();
         }
 
@@ -218,6 +217,7 @@ public class ArduinoCommunicatorActivity extends ListActivity {
         public void onReceive(Context context, Intent intent) {
             final String action = intent.getAction();
             if (DEBUG) Log.d(TAG, "onReceive() " + action);
+
             if (ArduinoCommunicatorService.DATA_RECEIVED_INTENT.equals(action)) {
                 handleTransferedData(intent, true);
             } else if (ArduinoCommunicatorService.DATA_SENT_INTERNAL_INTENT.equals(action)) {
