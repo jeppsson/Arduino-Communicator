@@ -89,7 +89,6 @@ public class ArduinoCommunicatorService extends Service {
         mUsbDevice = (UsbDevice) intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
         if (!initDevice()) {
             if (DEBUG) Log.e(TAG, "Init of device failed!");
-            Toast.makeText(getBaseContext(), "Init of device failed!", Toast.LENGTH_LONG).show();
             stopSelf();
             return Service.START_REDELIVER_INTENT;
         }
