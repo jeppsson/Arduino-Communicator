@@ -242,21 +242,13 @@ public class ArduinoCommunicatorService extends Service {
                     if (DEBUG) Log.i(TAG, "handleMessage() " + msg.what);
                     if (msg.what == 10) {
                         final byte[] dataToSend = (byte[]) msg.obj;
-                        int dataSent = 0;
-                        while (dataSent < dataToSend.length) {
-                            final int nrBytesToSend = Math.min(5, dataToSend.length - dataSent);
-                            byte[] sendBuffer = new byte[nrBytesToSend];
-                            System.arraycopy(dataToSend, dataSent, sendBuffer, 0, nrBytesToSend);
 
-                            if (DEBUG) Log.d(TAG, "calling bulkTransfer() out");
-                            final int len = mUsbConnection.bulkTransfer(mOutUsbEndpoint, sendBuffer, nrBytesToSend, 0);
-                            if (DEBUG) Log.d(TAG, len + " of " + nrBytesToSend + " sent.");
-                            Intent sendIntent = new Intent(DATA_SENT_INTERNAL_INTENT);
-                            sendIntent.putExtra(DATA_EXTRA, sendBuffer);
-                            sendBroadcast(sendIntent);
-
-                            dataSent += nrBytesToSend;
-                        }
+                        if (DEBUG) Log.d(TAG, "calling bulkTransfer() out");
+                        final int len = mUsbConnection.bulkTransfer(mOutUsbEndpoint, dataToSend, dataToSend.length, 0);
+                        if (DEBUG) Log.d(TAG, len + " of " + dataToSend.length + " sent.");
+                        Intent sendIntent = new Intent(DATA_SENT_INTERNAL_INTENT);
+                        sendIntent.putExtra(DATA_EXTRA, dataToSend);
+                        sendBroadcast(sendIntent);
                     } else if (msg.what == 11) {
                         Looper.myLooper().quit();
                     }
