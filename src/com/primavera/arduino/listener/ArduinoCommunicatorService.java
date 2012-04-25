@@ -225,7 +225,7 @@ public class ArduinoCommunicatorService extends Service {
         mSenderThread.start();
     }
 
-    class SenderThread extends Thread {
+    private class SenderThread extends Thread {
         public Handler mHandler;
 
         public SenderThread(String string) {
