@@ -52,42 +52,42 @@ public class ArduinoCommunicatorActivity extends ListActivity {
 
     private class ByteString {
 
-        private byte[] byteArray = new byte[1];
-        private int usedLength;
-        private boolean showInAscii;
+        private byte[] mByteArray = new byte[1];
+        private int mUsedLength;
+        private boolean mShowInAscii;
 
         void add(byte[] newArray) {
             // Make sure we have enough space to store byte array.
-            while (usedLength + newArray.length > byteArray.length) {
-                byte[] tmpArray = new byte[byteArray.length * 2];
-                System.arraycopy(byteArray, 0, tmpArray, 0, usedLength);
-                byteArray = tmpArray;
+            while (mUsedLength + newArray.length > mByteArray.length) {
+                byte[] tmpArray = new byte[mByteArray.length * 2];
+                System.arraycopy(mByteArray, 0, tmpArray, 0, mUsedLength);
+                mByteArray = tmpArray;
             }
 
             // Add byte array.
-            System.arraycopy(newArray, 0, byteArray, usedLength, newArray.length);
-            usedLength += newArray.length;
+            System.arraycopy(newArray, 0, mByteArray, mUsedLength, newArray.length);
+            mUsedLength += newArray.length;
         }
 
         void toggleCoding() {
-            showInAscii = !showInAscii;
+            mShowInAscii = !mShowInAscii;
         }
 
         @Override
         public String toString() {
             StringBuilder hexStr = new StringBuilder();
 
-            if (showInAscii) {
-                for (int i = 0; i < usedLength; i++) {
-                    if (Character.isLetterOrDigit(byteArray[i])) {
-                        hexStr.append(new String(new byte[] {byteArray[i]}));
+            if (mShowInAscii) {
+                for (int i = 0; i < mUsedLength; i++) {
+                    if (Character.isLetterOrDigit(mByteArray[i])) {
+                        hexStr.append(new String(new byte[] {mByteArray[i]}));
                     } else {
                         hexStr.append('.');
                     }
                 }
             } else {
-                for (int i = 0; i < usedLength; i++) {
-                    hexStr.append(String.format("%1$02X", byteArray[i]));
+                for (int i = 0; i < mUsedLength; i++) {
+                    hexStr.append(String.format("%1$02X", mByteArray[i]));
                     hexStr.append(" ");
                 }
             }
