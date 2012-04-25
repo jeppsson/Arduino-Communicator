@@ -47,10 +47,10 @@ public class ArduinoCommunicatorActivity extends ListActivity {
     private final static boolean DEBUG = false;
     
     private Boolean mIsReceiving;
-    private ArrayList<ByteString> mTransferedDataList = new ArrayList<ByteString>();
-    private ArrayAdapter<ByteString> mDataAdapter;
+    private ArrayList<ByteArray> mTransferedDataList = new ArrayList<ByteArray>();
+    private ArrayAdapter<ByteArray> mDataAdapter;
 
-    private class ByteString {
+    private class ByteArray {
 
         private byte[] mByteArray = new byte[1];
         private int mUsedLength;
@@ -143,7 +143,7 @@ public class ArduinoCommunicatorActivity extends ListActivity {
         filter.addAction(ArduinoCommunicatorService.DATA_SENT_INTERNAL_INTENT);
         registerReceiver(mReceiver, filter);
 
-        mDataAdapter = new ArrayAdapter<ByteString>(this, android.R.layout.simple_list_item_1, mTransferedDataList);
+        mDataAdapter = new ArrayAdapter<ByteArray>(this, android.R.layout.simple_list_item_1, mTransferedDataList);
         setListAdapter(mDataAdapter);
 
         findDevice();
@@ -154,7 +154,7 @@ public class ArduinoCommunicatorActivity extends ListActivity {
         super.onListItemClick(l, v, position, id);
 
         if (DEBUG) Log.i(TAG, "onListItemClick() " + position + " " + id);
-        ByteString transferedData = mTransferedDataList.get(position);
+        ByteArray transferedData = mTransferedDataList.get(position);
         transferedData.toggleCoding();
         mTransferedDataList.set(position, transferedData);
         mDataAdapter.notifyDataSetChanged();
@@ -201,13 +201,13 @@ public class ArduinoCommunicatorActivity extends ListActivity {
         private void handleTransferedData(Intent intent, boolean receiving) {
             if (mIsReceiving == null || mIsReceiving != receiving) {
                 mIsReceiving = receiving;
-                mTransferedDataList.add(new ByteString());
+                mTransferedDataList.add(new ByteArray());
             }
 
             final byte[] newTransferedData = intent.getByteArrayExtra(ArduinoCommunicatorService.DATA_EXTRA);
             if (DEBUG) Log.i(TAG, "data: " + newTransferedData.length + " \"" + new String(newTransferedData) + "\"");
 
-            ByteString transferedData = mTransferedDataList.get(mTransferedDataList.size() - 1);
+            ByteArray transferedData = mTransferedDataList.get(mTransferedDataList.size() - 1);
             transferedData.add(newTransferedData);
             mTransferedDataList.set(mTransferedDataList.size() - 1, transferedData);
             mDataAdapter.notifyDataSetChanged();
