@@ -37,7 +37,7 @@ import android.widget.Toast;
 public class ArduinoCommunicatorService extends Service {
 
     private final static String TAG = "ArduinoCommunicatorService";
-    private final static boolean DEBUG = true;
+    private final static boolean DEBUG = false;
 
     private boolean mIsRunning = false;
     private SenderThread mSenderThread;
