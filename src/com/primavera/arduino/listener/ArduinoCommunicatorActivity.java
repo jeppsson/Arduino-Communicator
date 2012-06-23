@@ -71,8 +71,10 @@ public class ArduinoCommunicatorActivity extends ListActivity {
             if (DEBUG) Log.d(TAG, "DeviceProtocol: " + tempUsbDevice.getDeviceProtocol());
 
             if (tempUsbDevice.getVendorId() == ARDUINO_USB_VENDOR_ID) {
-                if (tempUsbDevice.getProductId() == ARDUINO_USB_PRODUCT_ID) {
+                switch (tempUsbDevice.getProductId()) {
+                case ARDUINO_USB_PRODUCT_ID:
                     usbDevice = tempUsbDevice;
+                    break;
                 }
             }
         }
