@@ -41,7 +41,7 @@ import android.widget.Toast;
 public class ArduinoCommunicatorActivity extends ListActivity {
 
     private static final int ARDUINO_USB_VENDOR_ID = 0x2341;
-    private static final int ARDUINO_USB_PRODUCT_ID = 0x43;
+    private static final int ARDUINO_UNO_R3_USB_PRODUCT_ID = 0x43;
 
     private final static String TAG = "ArduinoCommunicatorActivity";
     private final static boolean DEBUG = false;
@@ -72,7 +72,7 @@ public class ArduinoCommunicatorActivity extends ListActivity {
 
             if (tempUsbDevice.getVendorId() == ARDUINO_USB_VENDOR_ID) {
                 switch (tempUsbDevice.getProductId()) {
-                case ARDUINO_USB_PRODUCT_ID:
+                case ARDUINO_UNO_R3_USB_PRODUCT_ID:
                     usbDevice = tempUsbDevice;
                     break;
                 }
