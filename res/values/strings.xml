@@ -12,5 +12,5 @@
     <string name="no_extra_in_intent">No %1$s extra in intent!</string>
     <string name="device_detaches">Device detached!</string>
     <string name="no_device_found">No device found!</string>
-    <string name="device_found">Device found!</string>
+    <string name="found">found!</string>
 </resources>

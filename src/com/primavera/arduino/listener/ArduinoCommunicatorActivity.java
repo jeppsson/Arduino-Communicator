@@ -75,6 +75,7 @@ public class ArduinoCommunicatorActivity extends ListActivity {
 
                 switch (tempUsbDevice.getProductId()) {
                 case ARDUINO_UNO_R3_USB_PRODUCT_ID:
+                    Toast.makeText(getBaseContext(), "Arduino Uno R3 " + getString(R.string.found), Toast.LENGTH_SHORT).show();
                     usbDevice = tempUsbDevice;
                     break;
                 }
@@ -86,7 +87,6 @@ public class ArduinoCommunicatorActivity extends ListActivity {
             Toast.makeText(getBaseContext(), getString(R.string.no_device_found), Toast.LENGTH_LONG).show();
         } else {
             if (DEBUG) Log.i(TAG, "Device found!");
-            Toast.makeText(getBaseContext(), getString(R.string.device_found), Toast.LENGTH_SHORT).show();
             Intent startIntent = new Intent(getApplicationContext(), ArduinoCommunicatorService.class);
             PendingIntent pendingIntent = PendingIntent.getService(getApplicationContext(), 0, startIntent, 0);
             usbManager.requestPermission(usbDevice, pendingIntent);
