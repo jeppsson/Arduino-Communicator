@@ -41,6 +41,7 @@ import android.widget.Toast;
 public class ArduinoCommunicatorActivity extends ListActivity {
 
     private static final int ARDUINO_USB_VENDOR_ID = 0x2341;
+    private static final int ARDUINO_MEGA_2560_R3_USB_PRODUCT_ID = 0x42;
     private static final int ARDUINO_UNO_R3_USB_PRODUCT_ID = 0x43;
 
     private final static String TAG = "ArduinoCommunicatorActivity";
@@ -74,6 +75,10 @@ public class ArduinoCommunicatorActivity extends ListActivity {
                 if (DEBUG) Log.i(TAG, "Arduino device found!");
 
                 switch (tempUsbDevice.getProductId()) {
+                case ARDUINO_MEGA_2560_R3_USB_PRODUCT_ID:
+                    Toast.makeText(getBaseContext(), "Arduino Mega 2560 R3 " + getString(R.string.found), Toast.LENGTH_SHORT).show();
+                    usbDevice = tempUsbDevice;
+                    break;
                 case ARDUINO_UNO_R3_USB_PRODUCT_ID:
                     Toast.makeText(getBaseContext(), "Arduino Uno R3 " + getString(R.string.found), Toast.LENGTH_SHORT).show();
                     usbDevice = tempUsbDevice;
