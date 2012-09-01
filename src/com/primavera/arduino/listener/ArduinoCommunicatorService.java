@@ -132,6 +132,11 @@ public class ArduinoCommunicatorService extends Service {
     private boolean initDevice() {
         UsbManager usbManager = (UsbManager) getSystemService(Context.USB_SERVICE);
         mUsbConnection = usbManager.openDevice(mUsbDevice);
+        if (mUsbConnection == null) {
+            if (DEBUG) Log.e(TAG, "Opening USB device failed!");
+            Toast.makeText(getBaseContext(), getString(R.string.opening_device_failed), Toast.LENGTH_LONG).show();
+            return false;
+        }
         UsbInterface usbInterface = mUsbDevice.getInterface(1);
         if (!mUsbConnection.claimInterface(usbInterface, true)) {
             if (DEBUG) Log.e(TAG, "Claiming interface failed!");
