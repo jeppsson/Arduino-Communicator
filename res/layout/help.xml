@@ -5,8 +5,8 @@
     android:layout_height="wrap_content"
     android:padding="10sp">
     <TextView
-        android:id="@+id/help_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:autoLink="web|email"
         android:text="@string/help_text" />
 </ScrollView>
