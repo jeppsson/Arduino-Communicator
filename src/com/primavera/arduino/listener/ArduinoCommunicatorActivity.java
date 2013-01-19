@@ -28,6 +28,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -162,7 +163,12 @@ public class ArduinoCommunicatorActivity extends ListActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
         case R.id.help:
-            startActivity(new Intent(this, Help.class));
+            startActivity(new Intent(Intent.ACTION_VIEW,
+                    Uri.parse("https://sites.google.com/site/arduinocommunicator/usage")));
+            return true;
+        case R.id.about:
+            startActivity(new Intent(Intent.ACTION_VIEW,
+                    Uri.parse("https://sites.google.com/site/arduinocommunicator/")));
             return true;
         default:
             return super.onOptionsItemSelected(item);
