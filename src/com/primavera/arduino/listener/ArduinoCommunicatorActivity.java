@@ -45,6 +45,8 @@ public class ArduinoCommunicatorActivity extends ListActivity {
     private static final int ARDUINO_MEGA_2560_USB_PRODUCT_ID = 0x10;
     private static final int ARDUINO_MEGA_2560_R3_USB_PRODUCT_ID = 0x42;
     private static final int ARDUINO_UNO_R3_USB_PRODUCT_ID = 0x43;
+    private static final int ARDUINO_MEGA_2560_ADK_R3_USB_PRODUCT_ID = 0x44;
+    private static final int ARDUINO_MEGA_2560_ADK_USB_PRODUCT_ID = 0x3F;
 
     private final static String TAG = "ArduinoCommunicatorActivity";
     private final static boolean DEBUG = false;
@@ -91,6 +93,14 @@ public class ArduinoCommunicatorActivity extends ListActivity {
                     break;
                 case ARDUINO_UNO_R3_USB_PRODUCT_ID:
                     Toast.makeText(getBaseContext(), "Arduino Uno R3 " + getString(R.string.found), Toast.LENGTH_SHORT).show();
+                    usbDevice = tempUsbDevice;
+                    break;
+                case ARDUINO_MEGA_2560_ADK_R3_USB_PRODUCT_ID:
+                    Toast.makeText(getBaseContext(), "Arduino Mega 2560 ADK R3 " + getString(R.string.found), Toast.LENGTH_SHORT).show();
+                    usbDevice = tempUsbDevice;
+                    break;
+                case ARDUINO_MEGA_2560_ADK_USB_PRODUCT_ID:
+                    Toast.makeText(getBaseContext(), "Arduino Mega 2560 ADK " + getString(R.string.found), Toast.LENGTH_SHORT).show();
                     usbDevice = tempUsbDevice;
                     break;
                 }
