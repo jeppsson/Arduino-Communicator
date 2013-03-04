@@ -174,11 +174,11 @@ public class ArduinoCommunicatorActivity extends ListActivity {
         switch (item.getItemId()) {
         case R.id.help:
             startActivity(new Intent(Intent.ACTION_VIEW,
-                    Uri.parse("https://sites.google.com/site/arduinocommunicator/usage")));
+                    Uri.parse("http://ron.bems.se/arducom/usage.html")));
             return true;
         case R.id.about:
             startActivity(new Intent(Intent.ACTION_VIEW,
-                    Uri.parse("https://sites.google.com/site/arduinocommunicator/")));
+                    Uri.parse("http://ron.bems.se/arducom/primaindex.php")));
             return true;
         default:
             return super.onOptionsItemSelected(item);
